@@ -15,26 +15,26 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "Go Test API")
 }
 
-func TodoIndex(w http.ResponseWriter, r *http.Request) {
+func AgentIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(todos); err != nil {
+	if err := json.NewEncoder(w).Encode(agents); err != nil {
 		panic(err)
 	}
 }
 
-func TodoShow(w http.ResponseWriter, r *http.Request) {
+func AgentShow(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	var todoId int
+	var agentId int
 	var err error
-	if todoId, err = strconv.Atoi(vars["todoId"]); err != nil {
+	if agentId, err = strconv.Atoi(vars["agentId"]); err != nil {
 		panic(err)
 	}
-	todo := RepoFindTodo(todoId)
-	if todo.Id > 0 {
+	agent := RepoFindAgent(agentId)
+	if agent.Id > 0 {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusOK)
-		if err := json.NewEncoder(w).Encode(todo); err != nil {
+		if err := json.NewEncoder(w).Encode(agent); err != nil {
 			panic(err)
 		}
 		return
@@ -55,8 +55,8 @@ Test with this curl command:
 curl -H "Content-Type: application/json" -d '{"name":"New Todo"}' http://localhost:8080/todos
 
 */
-func TodoCreate(w http.ResponseWriter, r *http.Request) {
-	var todo Todo
+func AgentCreate(w http.ResponseWriter, r *http.Request) {
+	var agent Agent
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	if err != nil {
 		panic(err)
@@ -64,7 +64,7 @@ func TodoCreate(w http.ResponseWriter, r *http.Request) {
 	if err := r.Body.Close(); err != nil {
 		panic(err)
 	}
-	if err := json.Unmarshal(body, &todo); err != nil {
+	if err := json.Unmarshal(body, &agent); err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(422) // unprocessable entity
 		if err := json.NewEncoder(w).Encode(err); err != nil {
@@ -72,10 +72,10 @@ func TodoCreate(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	t := RepoCreateTodo(todo)
+	a := RepoCreateTodo(agent)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusCreated)
-	if err := json.NewEncoder(w).Encode(t); err != nil {
+	if err := json.NewEncoder(w).Encode(a); err != nil {
 		panic(err)
 	}
 }

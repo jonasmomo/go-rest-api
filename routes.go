@@ -19,22 +19,22 @@ var routes = Routes{
 		Index,
 	},
 	Route{
-		"TodoIndex",
+		"AgentIndex",
 		"GET",
-		"/todos",
-		TodoIndex,
+		"/agents",
+		AgentIndex,
 	},
 	Route{
-		"TodoCreate",
+		"AgentCreate",
 		"POST",
-		"/todos",
-		TodoCreate,
+		"/agents",
+		AgentCreate,
 	},
 	Route{
-		"TodoShow",
+		"AgentShow",
 		"GET",
-		"/todos/{todoId}",
-		TodoShow,
+		"/agents/{agentId}",
+		AgentShow,
 	},
 
 	// calls
@@ -53,7 +53,7 @@ var routes = Routes{
 	Route{
 		"CallShow",
 		"GET",
-		"/calls/{todoId}",
+		"/calls/{callId}",
 		CallShow,
 	},
 }
