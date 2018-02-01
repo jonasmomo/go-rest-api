@@ -25,13 +25,12 @@ func RepoFindAgent(id int) Agent {
 	return Agent{}
 }
 
-//this is bad, I don't think it passes race condtions
-func RepoCreateTodo(a Agent) Agent {
-	currentAgentId += 1
-	a.Id = currentAgentId
-	agents = append(agents, a)
-	return a
-}
+//func RepoCreateTodo(a Agent) Agent {
+//	currentAgentId += 1
+//	a.Id = currentAgentId
+//	agents = append(agents, a)
+//	return a
+//}
 
 func RepoDestroyAgent(id int) error {
 	for i, a := range agents {
